@@ -4,6 +4,8 @@ export pkgname='deezer'
 export pkgdir=''
 export patches_dir='../../patches'
 
+wget https://www.deezer.com/desktop/download/artifact/win32/x86/4.17.0 -O "deezer-4.17.0-setup.exe"
+
 # Extract app from installer
 7z x -so deezer-4.17.0-setup.exe "\$PLUGINSDIR/app-32.7z" >app-32.7z
 # Extract app archive
