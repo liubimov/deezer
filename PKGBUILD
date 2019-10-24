@@ -1,41 +1,47 @@
-# Maintainer: Ilya Gulya <ilyagulya@gmail.com>
-pkgname="deezer"
-pkgver=0.18.2
-pkgrel=3
-pkgdesc="A proprietary music streaming service"
-arch=('x86_64')
-url="https://www.deezer.com/"
-license=('custom:"Copyright (c) 2006-2018 Deezer S.A."')
-depends=('electron>=3.0.10')
-provides=('deezer')
-options=('!strip')
-makedepends=('p7zip')
-source=(
-"$pkgname-$pkgver-setup.exe::https://www.deezer.com/desktop/download/artifact/win32/x86/$pkgver"
-"$pkgname.desktop"
-)
-md5sums=('3605ee6ebbf35d512dfdfc64bfc531c2'
-         '6787e48a44061671e326ababd1a2ea8d')
+#!/usr/bin/env bash
 
-package() {
-    
-    mkdir -p "$pkgdir"/usr/share/deezer
-    mkdir -p "$pkgdir"/usr/share/applications
-    mkdir -p "$pkgdir"/usr/bin/
+export pkgname='deezer'
+export pkgdir=''
+export patches_dir='../../patches'
 
-    # Extract app from installer
-    7z x -so $pkgname-$pkgver-setup.exe "\$PLUGINSDIR/app-32.7z" > app-32.7z
-    # Extract electron bundle from app archive
-    7z x -so app-32.7z "resources/app.asar" > app.asar
-    # Extract icon from app archive
-    7z x -so app-32.7z "resources/build/win/app.ico" > app.ico
+# Extract app from installer
+7z x -so deezer-4.17.0-setup.exe "\$PLUGINSDIR/app-32.7z" >app-32.7z
+# Extract app archive
+7z x -y -bsp0 -bso0 app-32.7z
 
-    echo "#!/bin/sh" > deezer
-    echo "/usr/bin/electron /usr/share/deezer/app.asar" >> deezer
+# Extract png from ico container
+convert resources/win/app.ico resources/win/deezer.png
 
-    install -Dm644 app.asar "$pkgdir"/usr/share/deezer/app.asar
-    install -Dm644 app.ico "$pkgdir"/usr/share/deezer/app.ico
-    install -Dm644 "$pkgname".desktop "$pkgdir"/usr/share/applications/
-    install -Dm755 deezer "$pkgdir"/usr/bin/deezer
+cd resources/
+rm -r app || true
+asar extract app.asar app
+# Remove NodeRT from package (-205.72 MiB)
+rm -r app/node_modules/@nodert
 
-}
+cd app
+
+prettier --write "app/*.js"
+
+# Apply patches
+for file in $patches_dir/*
+do
+patch -p1 <"$file"
+done
+
+tar -xvf "../../node_modules.tar.xz"
+
+cd ..
+asar pack app app.asar
+
+mkdir -p "$pkgdir"/usr/share/deezer
+mkdir -p "$pkgdir"/usr/share/applications
+mkdir -p "$pkgdir"/usr/share/icons/hicolor/256x256/apps/
+mkdir -p "$pkgdir"/usr/bin/
+
+echo "#!/bin/sh" >deezer
+echo "exec electron /usr/share/deezer/app.asar --no-sandbox \"\$@\"" >>deezer
+install -Dm644 ../resources/app.asar "$pkgdir"/usr/share/deezer/
+install -Dm644 ../resources/win/deezer.png "$pkgdir"/usr/share/icons/hicolor/256x256/apps/
+install -Dm644 ../resources/win/systray.png "$pkgdir"/usr/share/deezer/
+install -Dm644 ../"$pkgname".desktop "$pkgdir"/usr/share/applications/
+install -Dm755 deezer "$pkgdir"/usr/bin/

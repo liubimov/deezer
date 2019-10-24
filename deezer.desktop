@@ -1,10 +1,11 @@
 [Desktop Entry]
-Name=deezer
+Name=Deezer
 StartupNotify=true
-Icon=/usr/share/deezer/app.ico
-MimeType=text/plain;
-NoDisplay=true
+Icon=deezer
 Comment=Deezer audio streaming service
-Exec=/usr/bin/deezer
+Exec=/usr/bin/deezer %u
 Terminal=false
 Type=Application
+MimeType=x-scheme-handler/deezer;
+StartupWMClass=deezer
+Categories=Audio;Music;Player;AudioVideo;
