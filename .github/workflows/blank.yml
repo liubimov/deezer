@@ -9,7 +9,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - run: apt-get install electron,
-          npm install asar,
+    - run: | 
+          sudo apt-get install electron
+          sudo npm install -g asar
           ./PKGBUILD
     - uses: ./
