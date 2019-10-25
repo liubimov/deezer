@@ -11,4 +11,4 @@
 
 ```git clone https://github.com/liubimov/deezer.git
    cd deezer
-   sudo ./PKGBUILD```
+   sudo ./PKGBUILD
