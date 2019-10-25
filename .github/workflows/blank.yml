@@ -14,10 +14,11 @@ jobs:
           sudo npm install -g electron
           sudo npm install -g asar
           sudo ./.github/PKGBUILD
-          ls /usr/bin
-#     - uses: actions/upload-artifact@master
-#       with:
-#           name: binary
-#           path: path/to/artifact
+          mkdir ./artifacts/
+          cp /usr/bin/deezer ./artifacts/binary
+    - uses: actions/upload-artifact@master
+      with:
+          name: binary
+          path: artifacts
 
  
