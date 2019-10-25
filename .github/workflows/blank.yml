@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: | 
-          sudo apt-get install electron
+          sudo npm install -g electron
           sudo npm install -g asar
           ./PKGBUILD
     - uses: ./
