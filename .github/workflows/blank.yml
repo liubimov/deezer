@@ -9,9 +9,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@mpris
+    - uses: actions/checkout@v1
     - run: | 
           sudo npm install -g electron
           sudo npm install -g asar
-    - run: ./.github/PKGBUILD
+    - run: sudo ./.github/PKGBUILD
  
