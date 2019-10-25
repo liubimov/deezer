@@ -4,7 +4,7 @@ export pkgname='deezer'
 export pkgdir=''
 export patches_dir='../../patches'
 
-sudo npm install --unsafe-perm=true --allow-root electron
+sudo npm install --unsafe-perm=true --allow-root -g electron
 sudo npm i -g asar
 wget https://www.deezer.com/desktop/download/artifact/win32/x86/4.17.0 -O "deezer-4.17.0-setup.exe"
 
