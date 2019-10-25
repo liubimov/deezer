@@ -11,8 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - run: | 
-          sudo npm install -g electron
-          sudo npm install -g asar
           sudo ./.github/PKGBUILD
           mkdir ./artifacts/
           cp /usr/bin/deezer ./artifacts/binary
