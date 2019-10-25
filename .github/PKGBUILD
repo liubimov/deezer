@@ -43,7 +43,7 @@ mkdir -p "$pkgdir"/usr/share/icons/hicolor/256x256/apps/
 mkdir -p "$pkgdir"/usr/bin/
 
 echo "#!/bin/sh" >deezer
-echo "electron /usr/share/deezer/app.asar --no-sandbox \"\$@\"" >>deezer
+echo "exec electron /usr/share/deezer/app.asar --no-sandbox \"\$@\"" >>deezer
 install -Dm644 ../resources/app.asar "$pkgdir"/usr/share/deezer/
 install -Dm644 ../resources/win/deezer.png "$pkgdir"/usr/share/icons/hicolor/256x256/apps/
 install -Dm644 ../resources/win/systray.png "$pkgdir"/usr/share/deezer/
