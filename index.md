@@ -8,7 +8,8 @@
 - `7z`
 - `git`
 ## How to install
-
-```git clone https://github.com/liubimov/deezer.git
-   cd deezer
-   sudo ./PKGBUILD
+```
+ git clone https://github.com/liubimov/deezer.git
+ cd deezer
+ sudo ./PKGBUILD
+```
