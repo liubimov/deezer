@@ -1,6 +1,6 @@
 # Deezer client for Ubuntu/Debian
 ## Before install
-* Install this packages:
+### Install this packages:
 - `nodejs`
 - `npm`
 - `electron`
